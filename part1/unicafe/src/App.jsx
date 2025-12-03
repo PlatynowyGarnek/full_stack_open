@@ -1,6 +1,37 @@
 import { useState } from 'react'
 
 
+  const StatisticLine = ({value, text}) => {
+    
+    return (
+      
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+    
+    )
+
+  }
+  const Statistics = ({good, neutral, bad}) => {
+    if (good + neutral + bad === 0) {return (<p>No feedback given</p>)}
+    return (
+      
+        <table>
+          <tbody>
+          <StatisticLine text="good" value= {good} />
+          <StatisticLine text="neutral" value= {neutral} />
+          <StatisticLine text="bad" value= {bad} />
+          <StatisticLine text="all" value= {good + neutral + bad} />
+          <StatisticLine text="average" value= {((good - bad) / (good + neutral + bad)).toFixed(2)} />
+          <StatisticLine text="positive" value= {(good / (good + neutral + bad) * 100).toFixed(2) + " %"} />
+          </tbody>
+        </table>
+      
+    )
+  }
+
+  
   const Button = ({buttonType,text}) => {
     return (
       <button onClick={buttonType}>{text}</button>
@@ -38,27 +69,6 @@ const App = () => {
       setBad(newBad +1)
     )
   }
-  const averageScore = () => {
-    
-    const goodScore = good * 1
-    const neutralScore = neutral * 0
-    const badScore = bad * -1
-    if (good + neutral + bad === 0) {
-      return 0
-    }
-    return (
-      (goodScore + neutralScore + badScore) / (good + neutral + bad)
-    )
-  }
-  const positiveFeedback = () => {
-    if (good + neutral + bad === 0) {
-      return "0 %"
-    }
-    const percentage = (good / (good + neutral + bad)) * 100
-    return (
-      percentage.toFixed(2) + " %"
-    )
-  }
 
   return (
     <div>
@@ -66,13 +76,7 @@ const App = () => {
       <Button buttonType={goodButtonClicked} text="good" />
       <Button buttonType={neutralButtonClicked} text="neutral" />
       <Button buttonType={badButtonClicked} text="bad" />
-      <h1>Statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {good + neutral + bad}</p>
-      <p>average {averageScore()}</p>
-      <p>positive {positiveFeedback()}</p>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
