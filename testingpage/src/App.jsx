@@ -17,6 +17,8 @@ const History = (props) => {
   )
 
 }
+const App = () => {
+  const [ counter, setCounter ] = useState(0)
 
 const Button = ({onClick, text}) => <button onClick={onClick} >{text}</button>
 
@@ -53,5 +55,4 @@ const handleRightClick = () => {
     </div>
   )
 }
-
 export default App
